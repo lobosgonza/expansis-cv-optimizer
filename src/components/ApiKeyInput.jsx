@@ -1,7 +1,7 @@
 // src/components/ApiKeyInput.jsx
 import React, { useState, useEffect } from 'react';
 
-// 🎯 LA REPARACIÓN: Agregamos "hasError = false" como parámetro con un valor por defecto seguro
+// 🏁 MÉXICO 68: Mantenemos tu corrección estructural pero con empaque de alta tensión gráfica
 function ApiKeyInput({ apiKey, setApiKey, hasError = false }) {
 	const [showKey, setShowKey] = useState(false);
 
@@ -27,7 +27,7 @@ function ApiKeyInput({ apiKey, setApiKey, hasError = false }) {
 	};
 
 	return (
-		<div className='flex flex-col items-start md:items-end gap-1.5 w-full sm:w-auto'>
+		<div className='flex flex-col items-center md:items-end gap-2 w-full sm:w-auto'>
 			<div className='flex items-center gap-2 w-full sm:w-64 relative'>
 				<input
 					type={showKey || isSystemKey ? 'text' : 'password'}
@@ -35,14 +35,15 @@ function ApiKeyInput({ apiKey, setApiKey, hasError = false }) {
 					onChange={handleChange}
 					disabled={isSystemKey}
 					placeholder={hasError ? 'API KEY REQUIRED...' : 'ENTER GEMINI API KEY...'}
-					className={`w-full text-[10px] p-2 pr-8 border rounded-none bg-transparent font-mono tracking-wider focus:outline-none transition-all ${
+					// 🎨 COLOR FUNCIONAL OLÍMPICO: Marcos duros de 2px, Rosa Mexicano para éxito y Rojo Puro para alertas
+					className={`w-full text-[10px] p-2.5 pr-14 border-2 rounded-none bg-white font-mono font-bold tracking-widest focus:outline-none transition-all ${
 						isSystemKey
-							? 'border-emerald-600 border-l-4 border-l-emerald-600 bg-emerald-50/20 text-emerald-700 font-bold tracking-widest select-none'
+							? 'border-[#529346] border-l-4 border-l-[#529346] bg-[#529346]/5 text-[#529346] select-none'
 							: !apiKey && hasError
-								? 'border-red-600 border-l-4 border-l-red-600 bg-red-50/20 text-red-700 placeholder-red-400 font-bold'
+								? 'border-red-600 border-l-4 border-l-red-600 bg-red-50 text-red-600 placeholder-red-400 font-black'
 								: apiKey
-									? 'border-stone-950 focus:border-stone-950 text-stone-950'
-									: 'border-stone-200 focus:border-stone-950 text-stone-950 placeholder-stone-300'
+									? 'border-stone-950 focus:border-[#F1005E] text-stone-950'
+									: 'border-stone-950 focus:border-[#529346] text-stone-950 placeholder-stone-300'
 					}`}
 				/>
 
@@ -50,7 +51,7 @@ function ApiKeyInput({ apiKey, setApiKey, hasError = false }) {
 					<button
 						type='button'
 						onClick={() => setShowKey(!showKey)}
-						className='absolute right-2.5 top-1/2 -translate-y-1/2 text-stone-400 hover:text-stone-950 cursor-pointer text-[10px] font-bold tracking-tighter'>
+						className='absolute right-3 top-1/2 -translate-y-1/2 text-stone-950 hover:text-[#F1005E] cursor-pointer text-[9px] font-black tracking-widest border-l border-stone-200 pl-2'>
 						{showKey ? 'HIDE' : 'SHOW'}
 					</button>
 				)}
@@ -60,8 +61,8 @@ function ApiKeyInput({ apiKey, setApiKey, hasError = false }) {
 				href='https://aistudio.google.com/'
 				target='_blank'
 				rel='noopener noreferrer'
-				className='text-[9px] text-stone-400 hover:text-stone-950 underline underline-offset-2 uppercase tracking-widest font-medium transition-colors'>
-				{isSystemKey ? 'Cargada vía .env.local' : 'Get API Key ↗'}
+				className='text-[9px] text-stone-950 hover:text-[#F1005E] font-black uppercase tracking-widest border-b-2 border-stone-950 hover:border-[#F1005E] transition-colors'>
+				{isSystemKey ? '// AUTH VIA ENV' : 'GET API KEY NOW ↗'}
 			</a>
 		</div>
 	);

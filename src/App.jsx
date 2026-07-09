@@ -17,40 +17,39 @@ function App() {
 	const [isLoading, setIsLoading] = useState(false);
 
 	return (
-		// 🎨 CAMBIO SUIZO: Cambiamos bg-stone-100 por un tono papel limpio y un resaltado negro puro ultra-elegante
-		<div className='min-h-screen bg-[#fafaf9] text-stone-950 antialiased selection:bg-stone-950 selection:text-white print:bg-white print:p-0'>
-			{/* ENCABEZADO DE CONTROL (Estilo Cabecera de Prensa) */}
-			{/* CAMBIO SUIZO: Eliminamos sombras, bajamos a borde fino de 1px (hairline) y quitamos curvas */}
-			<header className='py-8 bg-white border-b border-stone-200 print:hidden'>
-				<div className='max-w-5xl mx-auto px-6 flex flex-col md:flex-row items-baseline justify-between gap-6'>
-					{/* Bloque de Identidad Visual */}
-					<div className='space-y-1 text-left'>
-						<h1 className='font-black text-2xl tracking-tighter uppercase text-stone-950'>
-							ATS Optimizer
-							<span className='font-light text-stone-400 text-xs tracking-widest uppercase block sm:inline sm:ml-3 normal-case'>by expansis pro</span>
-						</h1>
-						<p className='text-[10px] text-stone-500 uppercase tracking-widest font-medium'>Semantics & data engineering for modern resumes</p>
+		// 🎨 MÉXICO 68: Fondo blanco puro de alto contraste y selección en Rosa Mexicano vibrante
+		<div className='min-h-screen bg-white text-stone-950 antialiased selection:bg-[#F1005E] selection:text-white print:bg-white print:p-0'>
+			{/* ENCABEZADO OLÍMPICO */}
+			<header className='pt-8 bg-white print:hidden'>
+				<div className='max-w-5xl mx-auto px-6 pb-6 flex flex-col md:flex-row items-center justify-between gap-6'>
+					{/* Bloque de Identidad Gráfica Expandida */}
+					<div className='space-y-1.5 text-center md:text-left'>
+						<h1 className='font-black text-5xl uppercase tracking-tighter text-stone-950 text-wyman-echo'>ATS OPTIMIZER</h1>
+						<p className='text-[10px] text-stone-900 uppercase tracking-widest font-bold font-mono'>[ SECTION 01 // KINETIC DATA ENGINE ]</p>
 					</div>
 
 					{/* Contenedor de Llave API */}
-					<div className='w-full md:w-auto flex justify-end'>
+					<div className='w-full md:w-auto flex justify-center md:justify-end'>
 						<ApiKeyInput apiKey={apiKey} setApiKey={setApiKey} />
 					</div>
 				</div>
+
+				{/* 🏁 LA FRANJA WYMAN: Líneas paralelas Huichol que dividen la interfaz de forma matemática */}
+				{/* Nota: Requiere la clase .bg-wyman-lines que declaramos en tu archivo src/index.css */}
+				<div className='h-6 w-full bg-wyman-lines border-t-2 border-b-2 border-stone-950 shadow-none'></div>
 			</header>
 
 			{/* ZONA DE TRABAJO PRINCIPAL */}
-			{/* CAMBIO SUIZO: Espaciados más amplios (py-14) para dejar respirar la composición */}
-			<main className='max-w-5xl mx-auto px-6 py-14 print:p-0'>
+			<main className='max-w-5xl mx-auto px-6 py-12 print:p-0'>
 				{/* Formulario principal de captura */}
 				<div className='print:hidden'>
 					<DashboardForm apiKey={apiKey} setIsLoading={setIsLoading} isLoading={isLoading} setOptimizedCV={setOptimizedCV} />
 				</div>
 
 				{/* LIENZO DE RENDERIZADO DEL PDF */}
-				{/* CAMBIO SUIZO: Eliminamos shadow-xs por completo, el documento se expone plano sobre la rejilla */}
+				{/* MÉXICO 68: Enmarcado con un contorno negro grueso de 2px, emulando un cartel serigráfico */}
 				{optimizedCV && (
-					<div className='mt-14 bg-white p-8 md:p-12 border border-stone-200 rounded-none print:shadow-none print:border-none print:p-0 print:mt-0 animate-fade-in'>
+					<div className='mt-12 bg-white p-8 md:p-12 border-2 border-stone-950 rounded-none print:shadow-none print:border-none print:p-0 print:mt-0'>
 						<PreviewCV data={optimizedCV} />
 					</div>
 				)}
