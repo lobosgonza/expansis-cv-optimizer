@@ -5,24 +5,44 @@ import { GoogleGenerativeAI } from "@google/generative-ai"; // <-- CORRECCIÓN: 
  * Envía el CV base y la descripción del cargo a Gemini para obtener una versión optimizada para ATS.
  */
 export const optimizeCVWithGemini = async (apiKey, baseCV, jobDescription, language) => {
-    if (!apiKey) throw new Error("La API Key es obligatoria.");
-    if (!baseCV || !jobDescription) throw new Error("El CV base y la descripción del cargo son obligatorios.");
+  if (!apiKey) throw new Error("La API Key es obligatoria.");
+  if (!baseCV || !jobDescription) throw new Error("El CV base y la descripción del cargo son obligatorios.");
+  // ==========================================
+  // 🔍 INICIO DEL BLOQUE DE DIAGNÓSTICO
+  // ==========================================
+  try {
+    console.log("🛰️ Enviando consulta de diagnóstico a Google...");
+    const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models?key=${apiKey}`);
+    const data = await response.json();
 
-    // 1. Inicialización correcta para el paquete @google/generative-ai
-    const genAI = new GoogleGenerativeAI(apiKey);
+    console.log("📋 --- RESULTADO DEL DIAGNÓSTICO ---");
+    if (data.models) {
+      console.log("Modelos que tienes disponibles actualmente:");
+      console.table(data.models.map(m => ({ Nombre: m.name, Estado: m.supportedGenerationMethods.join(', ') })));
+    } else {
+      console.error("Google no devolvió modelos. Respuesta cruda:", data);
+    }
+    console.log("-------------------------------------");
+  } catch (diagError) {
+    console.error("❌ Falló la consulta de diagnóstico básica:", diagError);
+  }
+  // ==========================================
+  // 🔍 FIN DEL BLOQUE DE DIAGNÓSTICO
+  // ==========================================
+  // 1. Inicialización correcta para el paquete @google/generative-ai
+  const genAI = new GoogleGenerativeAI(apiKey);
 
-    // Forzamos el modo JSON directo en la configuración del modelo
-    const model = genAI.getGenerativeModel({
-        model: "gemini-2.5-flash", // <-- ACTUALIZADO
-        generationConfig: { responseMimeType: "application/json" }
-    });
+  const model = genAI.getGenerativeModel({
+    model: "gemini-2.5-flash",
+    generationConfig: { responseMimeType: "application/json" }
+  });
 
-    const targetLangText = language === 'en'
-        ? "ENGLISH: You must translate and write the entire output profile strictly in English language."
-        : "ESPAÑOL: Debes traducir y redactar todo el perfil de salida estrictamente en idioma Español castellano.";
+  const targetLangText = language === 'en'
+    ? "ENGLISH: You must translate and write the entire output profile strictly in English language."
+    : "ESPAÑOL: Debes traducir y redactar todo el perfil de salida estrictamente en idioma Español castellano.";
 
-    // 2. Estructura del Prompt
-    const prompt = `
+  // 2. Estructura del Prompt
+  const prompt = `
     Actúas como un reclutador técnico senior y experto en optimización de sistemas ATS (Applicant Tracking Systems).
     Tu objetivo es tomar el Currículum Base de un candidato y la Descripción del Cargo (Job Description) proporcionada, y reescribir el contenido para maximizar el 'Match Rate' semántico.
 
@@ -75,14 +95,14 @@ export const optimizeCVWithGemini = async (apiKey, baseCV, jobDescription, langu
     }
   `;
 
-    try {
-        // 3. Ejecución de la consulta nativa
-        const result = await model.generateContent(prompt);
-        const responseText = result.response.text();
+  try {
+    // 3. Ejecución de la consulta nativa
+    const result = await model.generateContent(prompt);
+    const responseText = result.response.text();
 
-        return JSON.parse(responseText);
-    } catch (error) {
-        console.error("Error en el motor GeminiEngine:", error);
-        throw new Error("Error de comunicación con la IA. Verifica que tu API Key sea válida.");
-    }
+    return JSON.parse(responseText);
+  } catch (error) {
+    console.error("Error en el motor GeminiEngine:", error);
+    throw new Error("Error de comunicación con la IA. Verifica que tu API Key sea válida.");
+  }
 };
