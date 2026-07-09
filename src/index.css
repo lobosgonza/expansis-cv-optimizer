@@ -1,21 +1,116 @@
+/* src/index.css */
+
+/* Al inicio absoluto de src/index.css */
+@import url('https://fonts.googleapis.com/css2?family=Monoton&family=Space+Grotesk:wght@400;500;700;900&display=swap');
 @import 'tailwindcss';
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;900&display=swap');
-
-body {
-	font-family: 'Inter', sans-serif;
-	background-color: #fcfcfc;
-	color: #1c1917;
+.font-monoton {
+	font-family: 'Monoton', cursive;
 }
 
-/* 
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700;900&display=swap');
+/* --------------------------------------------------------- */
+/* A partir de aquí ya podemos escribir CSS normal sin errores */
+/* --------------------------------------------------------- */
 
 body {
 	font-family: 'Space Grotesk', sans-serif;
 	background-color: #ffffff;
 }
 
+/* 🏁 1. EL PATRÓN WYMAN MEJORADO: Líneas horizontales cinéticas de alta densidad */
 .bg-wyman-lines {
-	background-image: repeating-linear-gradient(0deg, #1c1917, #1c1917 3px, #ffffff 3px, #ffffff 6px);
-} */
+	background-image: repeating-linear-gradient(0deg, #1c1917, #1c1917 2px, #ffffff 2px, #ffffff 4px);
+}
+
+/* 🏁 2. PATRÓN VERTICAL: Al cruzarse con el de arriba crea un efecto de rejilla Op-Art */
+.bg-wyman-vertical {
+	background-image: repeating-linear-gradient(90deg, #1c1917, #1c1917 2px, #ffffff 2px, #ffffff 4px);
+}
+
+/* 🏁 3. BORDE CONCÉNTRICO TRIPLE: Una línea negra, una blanca y una Rosa Mexicano pegadas */
+.wyman-border-concentric {
+	box-shadow:
+		0 0 0 3px #1c1917,
+		0 0 0 6px #ffffff,
+		0 0 0 9px #f1005e,
+		0 0 0 12px #ffffff,
+		0 0 0 15px #1c1917;
+}
+
+/* 🏁 4. TEXTO CINÉTICO: Las letras mismas se rellenan con líneas de cebra */
+.text-kinetic-stripes {
+	background: repeating-linear-gradient(45deg, #1c1917, #1c1917 2px, #ffffff 2px, #ffffff 4px);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+}
+
+/* 🏁 5. SOMBRA TIPOGRÁFICA REPETIDA: El efecto de eco o estela psicodélica */
+.text-wyman-echo {
+	text-shadow:
+		2px 2px 0px #ffffff,
+		4px 4px 0px #f1005e,
+		6px 6px 0px #ffffff,
+		8px 8px 0px #1c1917;
+}
+
+/* 🏁 6. ANIMACIÓN ÓPTICA EN FLUJO CONTINUO */
+@keyframes wymanScroll {
+	0% {
+		background-position: 0 0;
+	}
+	100% {
+		background-position: 0 8px;
+	}
+}
+
+.animate-wyman-flow {
+	background-image: repeating-linear-gradient(0deg, #1c1917, #1c1917 2px, #ffffff 2px, #ffffff 4px);
+	animation: wymanScroll 0.25s linear infinite;
+}
+
+@keyframes wymanStrobo {
+	0% {
+		background-color: #f1005e;
+		background-image: none;
+		color: #ffffff;
+	}
+	14% {
+		/* FOTOGRAMA 1: CUADRÍCULA DIGITAL (GRID) */
+		/* Cruzamos dos gradientes lineales usando una coma */
+		background-image:
+			repeating-linear-gradient(90deg, #1c1917, #1c1917 2px, transparent 2px, transparent 12px), repeating-linear-gradient(0deg, #1c1917, #1c1917 2px, #ffffff 2px, #ffffff 12px);
+		color: #f1005e;
+	}
+	28% {
+		background-color: #ffffff;
+		background-image: none;
+	}
+	42% {
+		/* FOTOGRAMA 2: CÍRCULOS CONCÉNTRICOS (ONDA RADIAL) */
+		/* Genera anillos perfectos desde el centro */
+		background-image: repeating-radial-gradient(circle, #1c1917, #1c1917 3px, #f1005e 3px, #f1005e 8px);
+		color: #ffffff;
+	}
+	56% {
+		background-color: #1c1917;
+		background-image: none;
+	}
+	70% {
+		/* FOTOGRAMA 3: RAYOS HIPNÓTICOS (CONIC WHEEL) */
+		/* Divide el fondo en "rebanadas" angulares como un sol radiante */
+		background-image: repeating-conic-gradient(from 0deg, #f1005e, #f1005e 6deg, #ffffff 6deg, #ffffff 12deg);
+	}
+	84% {
+		background-color: #f1005e;
+		background-image: none;
+	}
+	100% {
+		background-color: #1c1917;
+		background-image: none;
+	}
+}
+
+/* 🎯 CAMBIO: Ahora la animación corre en bucle infinito mientras la clase esté activa */
+@utility animate-strobo-loop {
+	animation: wymanStrobo 0.5s steps(1) infinite;
+}

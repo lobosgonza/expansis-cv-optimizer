@@ -7,33 +7,13 @@ import { GoogleGenerativeAI } from "@google/generative-ai"; // <-- CORRECCIÓN: 
 export const optimizeCVWithGemini = async (apiKey, baseCV, jobDescription, language) => {
   if (!apiKey) throw new Error("La API Key es obligatoria.");
   if (!baseCV || !jobDescription) throw new Error("El CV base y la descripción del cargo son obligatorios.");
-  // ==========================================
-  // 🔍 INICIO DEL BLOQUE DE DIAGNÓSTICO
-  // ==========================================
-  try {
-    console.log("🛰️ Enviando consulta de diagnóstico a Google...");
-    const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models?key=${apiKey}`);
-    const data = await response.json();
 
-    console.log("📋 --- RESULTADO DEL DIAGNÓSTICO ---");
-    if (data.models) {
-      console.log("Modelos que tienes disponibles actualmente:");
-      console.table(data.models.map(m => ({ Nombre: m.name, Estado: m.supportedGenerationMethods.join(', ') })));
-    } else {
-      console.error("Google no devolvió modelos. Respuesta cruda:", data);
-    }
-    console.log("-------------------------------------");
-  } catch (diagError) {
-    console.error("❌ Falló la consulta de diagnóstico básica:", diagError);
-  }
-  // ==========================================
-  // 🔍 FIN DEL BLOQUE DE DIAGNÓSTICO
-  // ==========================================
   // 1. Inicialización correcta para el paquete @google/generative-ai
   const genAI = new GoogleGenerativeAI(apiKey);
 
+  // Forzamos el modo JSON directo en la configuración del modelo
   const model = genAI.getGenerativeModel({
-    model: "gemini-2.5-flash",
+    model: "gemini-2.5-flash", // <-- ACTUALIZADO
     generationConfig: { responseMimeType: "application/json" }
   });
 
