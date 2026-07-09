@@ -54,6 +54,22 @@ function App() {
 					</div>
 				)}
 			</main>
+			{/* 🏁 FOOTER MINIMALISTA TECNOLÓGICO */}
+			<footer className='py-8 bg-white border-t border-stone-100 print:hidden mt-auto'>
+				<div className='max-w-5xl mx-auto px-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-[10px] font-mono font-bold tracking-widest uppercase text-stone-400'>
+					<span>[ ENGINE v1.0.0 // PRODUCTION ]</span>
+					<span className='text-center sm:text-right'>
+						DEVELOPED BY{' '}
+						<a
+							href='https://expansispro.com/'
+							target='_blank'
+							rel='noopener noreferrer'
+							className='text-stone-950 hover:text-[#F1005E] underline underline-offset-4 transition-colors'>
+							EXPANSISPRO.COM
+						</a>
+					</span>
+				</div>
+			</footer>
 		</div>
 	);
 }

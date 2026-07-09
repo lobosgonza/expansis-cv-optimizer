@@ -4,8 +4,10 @@ import React, { useState } from 'react';
 function PreviewCV({ data }) {
 	if (!data) return null;
 
-	// 1. ESTADO DE EDICIÓN INTERACTIVO (Mantenemos tu lógica intacta)
+	// 1. GLOBAL INTERACTIVE STATES
 	const [isEditing, setIsEditing] = useState(false);
+	const [brandColor, setBrandColor] = useState('#F1005E'); // 🎯 Color Picker State
+	const [fontTheme, setFontTheme] = useState('geometric'); // 🎯 Typography Theme State
 
 	const isSingle = data.fitToSinglePage;
 	const pageMargin = isSingle ? '12mm 15mm 12mm 15mm' : '18mm 20mm 18mm 20mm';
@@ -13,13 +15,20 @@ function PreviewCV({ data }) {
 	const itemSpacing = isSingle ? 'space-y-3' : 'space-y-6';
 	const textLeading = isSingle ? 'leading-tight' : 'leading-relaxed';
 
+	// Mapping the 3 distinct aesthetic typography themes
+	const themeFonts = {
+		geometric: "'Space Grotesk', sans-serif",
+		modern: 'system-ui, -apple-system, sans-serif',
+		editorial: 'Georgia, serif',
+	};
+
 	const t = {
 		es: {
 			success: '✨ ¡CURRÍCULUM OPTIMIZADO CON ÉXITO!',
 			subtitle: isEditing
 				? '// MODO EDICIÓN ACTIVO: HAZ CLIC DIRECTAMENTE EN CUALQUIER TEXTO PARA CORREGIR.'
 				: 'El archivo se guardará automáticamente con el formato oficial de fecha y nombre.',
-			saveBtn: '🖨️ IMPRIMIR AS PDF',
+			saveBtn: '🖨️ PRINT AS PDF',
 			editBtn: isEditing ? '🔒 LOCK CHANGES' : '✍️ EDIT TEXT',
 			profile: 'Perfil Profesional',
 			skills: 'Habilidades & Tecnologías',
@@ -67,52 +76,108 @@ function PreviewCV({ data }) {
 
 	return (
 		<div className='space-y-8 print:space-y-0'>
+			{/* DYNAMIC SCOPED ENGINE STYLE RULES */}
 			<style>{`
-        @page {
-          size: letter;
-          margin: ${pageMargin}; 
-        }
-        @media print {
-          body {
-            background-color: #ffffff;
-            -webkit-print-color-adjust: exact;
-          }
-        }
-      `}</style>
+				@page {
+					size: letter;
+					margin: ${pageMargin}; 
+				}
+				@media print {
+					body {
+						background-color: #ffffff;
+						-webkit-print-color-adjust: exact;
+					}
+				}
+				/* 🏁 Injecting layout overrides programmatically */
+				.cv-sheet-target {
+					font-family: ${themeFonts[fontTheme]} !important;
+				}
+				.brand-text-target {
+					color: ${brandColor} !important;
+				}
+				.brand-bg-target {
+					background-color: ${brandColor} !important;
+				}
+				.brand-border-target {
+					border-color: ${brandColor} !important;
+				}
+			`}</style>
 
-			{/* PANEL DE ACCIÓN SUPERIOR */}
-			<div className='flex flex-col sm:flex-row justify-between items-center gap-4 bg-white p-6 border-2 border-stone-950 rounded-none shadow-none print:hidden'>
-				<div className='text-left space-y-0.5'>
-					<p className='text-xs font-black uppercase tracking-widest text-[#F1005E]'>{t.success}</p>
-					<p className='text-[10px] font-mono text-stone-900 uppercase font-bold tracking-wide'>{t.subtitle}</p>
+			{/* ACTION PANEL & ENGINE ENGINE CONTROLS */}
+			<div className='flex flex-col lg:flex-row justify-between items-stretch lg:items-center gap-6 bg-white p-6 border-2 border-stone-950 rounded-none shadow-none print:hidden'>
+				<div className='text-left space-y-2 flex-1'>
+					<div>
+						<p className='text-xs font-black uppercase tracking-widest brand-text-target'>{t.success}</p>
+						<p className='text-[10px] font-mono text-stone-900 uppercase font-bold tracking-wide'>{t.subtitle}</p>
+					</div>
+
+					{/* 🏁 THEME CONFIGURATION CONTROL BAR */}
+					<div className='flex flex-wrap items-center gap-4 pt-1'>
+						{/* COLOR PICKER UNIT */}
+						<div className='flex items-center gap-2 border-2 border-stone-950 p-1 bg-white h-9'>
+							<span className='text-[10px] font-mono font-black pl-1 text-stone-950'>COLOR:</span>
+							<input
+								type='color'
+								value={brandColor}
+								onChange={(e) => setBrandColor(e.target.value)}
+								className='w-6 h-full border border-stone-300 p-0 cursor-pointer bg-transparent rounded-none outline-none'
+							/>
+						</div>
+
+						{/* TYPOGRAPHY THEME SELECTOR BLOCK */}
+						<div className='flex items-center border-2 border-stone-950 p-0.5 bg-white h-9'>
+							<span className='text-[10px] font-mono font-black px-2 text-stone-400 border-r border-stone-200'>FONTS:</span>
+							<button
+								type='button'
+								onClick={() => setFontTheme('geometric')}
+								className={`px-3 h-full text-[10px] font-black font-mono tracking-wider transition-colors cursor-pointer ${fontTheme === 'geometric' ? 'bg-stone-950 text-white' : 'text-stone-950 hover:bg-stone-100'}`}>
+								GEOMETRIC
+							</button>
+							<button
+								type='button'
+								onClick={() => setFontTheme('modern')}
+								className={`px-3 h-full text-[10px] font-black font-mono tracking-wider transition-colors cursor-pointer border-x border-stone-200 ${fontTheme === 'modern' ? 'bg-stone-950 text-white' : 'text-stone-950 hover:bg-stone-100'}`}>
+								MODERN
+							</button>
+							<button
+								type='button'
+								onClick={() => setFontTheme('editorial')}
+								className={`px-3 h-full text-[10px] font-black font-mono tracking-wider transition-colors cursor-pointer ${fontTheme === 'editorial' ? 'bg-stone-950 text-white' : 'text-stone-950 hover:bg-stone-100'}`}>
+								SERIF
+							</button>
+						</div>
+					</div>
 				</div>
-				<div className='flex w-full sm:w-auto gap-3'>
-					{/* BOTÓN EDITAR */}
+
+				{/* SYSTEM OPERATION CONTROLS */}
+				<div className='flex flex-row gap-3 items-end justify-end self-center w-full lg:w-auto shrink-0'>
+					{/* EDIT TEXT TOGGLE */}
 					<button
 						type='button'
 						onClick={() => setIsEditing(!isEditing)}
-						className={`flex-1 sm:flex-none font-black text-xs uppercase tracking-widest py-3 px-5 border-2 transition-colors cursor-pointer rounded-none ${
-							isEditing ? 'bg-[#F1005E] border-stone-950 text-white' : 'bg-white border-stone-950 text-stone-950 hover:bg-stone-50'
-						}`}>
+						className={`font-black text-xs uppercase tracking-widest py-4 px-5 border-2 transition-colors cursor-pointer rounded-none h-12 flex items-center justify-center ${
+							isEditing ? 'brand-bg-target border-stone-950 text-white' : 'bg-white border-stone-950 text-stone-950 hover:bg-stone-50'
+						}`}
+						style={isEditing ? { borderColor: '#1c1917' } : {}}>
 						{t.editBtn}
 					</button>
 
-					{/* BOTÓN IMPRIMIR */}
+					{/* SYSTEM PRINT BUTTON */}
 					<button
 						type='button'
 						onClick={handlePrint}
-						className='flex-1 sm:w-auto bg-stone-950 hover:bg-[#F1005E] text-white font-black text-xs uppercase tracking-widest py-3 px-6 border-2 border-stone-950 shadow-none transition-colors cursor-pointer rounded-none'>
+						className='bg-stone-950 text-white font-black text-xs uppercase tracking-widest py-4 px-6 border-2 border-stone-950 shadow-none transition-all cursor-pointer rounded-none h-12 flex items-center justify-center hover:opacity-90'>
 						{t.saveBtn}
 					</button>
 				</div>
 			</div>
 
-			{/* HOJA DEL CURRÍCULUM */}
+			{/* CURRICULUM WORK SHEET FRAME */}
 			<div
-				className={`bg-white text-stone-950 max-w-[800px] mx-auto print:p-0 print:max-w-full ${
+				className={`bg-white text-stone-950 max-w-[800px] mx-auto print:p-0 print:max-w-full cv-sheet-target transition-all ${
 					isSingle ? 'print:text-[10.5px]' : 'print:text-[11px]'
-				} ${isEditing ? 'border-2 border-dashed border-[#F1005E] p-6 bg-[#F1005E]/5' : ''}`}>
-				{/* ENCABEZADO REGLAMENTARIO */}
+				} ${isEditing ? 'border-2 border-dashed p-6 bg-stone-50 brand-border-target' : ''}`}>
+				{/* COMPONENT HEADER BLOCK */}
 				<header className={`border-b-4 border-stone-950 pb-4 ${isSingle ? 'mb-5' : 'mb-8'} text-left`}>
 					<h1
 						contentEditable={isEditing}
@@ -123,15 +188,15 @@ function PreviewCV({ data }) {
 					<h2
 						contentEditable={isEditing}
 						suppressContentEditableWarning
-						className='text-xs font-bold text-[#F1005E] uppercase tracking-widest mt-1.5 focus:bg-stone-100 focus:outline-none px-0.5 transition-colors'>
+						className='text-xs font-bold uppercase tracking-widest mt-1.5 focus:bg-stone-100 focus:outline-none px-0.5 transition-colors brand-text-target'>
 						{data.title}
 					</h2>
 
-					{/* Metadatos de contacto tipográficos */}
+					{/* METADATA TRACK */}
 					<div className='flex flex-wrap gap-y-1 gap-x-4 text-xs font-bold text-stone-950 mt-4 print:text-[10px] tracking-widest font-mono uppercase'>
 						{isSpecified(data.contact?.email) && (
 							<span className='flex items-center gap-1'>
-								<span className='text-[#F1005E] font-black select-none'>[E]</span>
+								<span className='font-black select-none brand-text-target'>[E]</span>
 								<span contentEditable={isEditing} suppressContentEditableWarning className='focus:bg-stone-100 focus:outline-none px-0.5'>
 									{data.contact.email}
 								</span>
@@ -139,7 +204,7 @@ function PreviewCV({ data }) {
 						)}
 						{isSpecified(data.contact?.phone) && (
 							<span className='flex items-center gap-1'>
-								<span className='text-[#F1005E] font-black select-none'>[T]</span>
+								<span className='font-black select-none brand-text-target'>[T]</span>
 								<span contentEditable={isEditing} suppressContentEditableWarning className='focus:bg-stone-100 focus:outline-none px-0.5'>
 									{data.contact.phone}
 								</span>
@@ -147,7 +212,7 @@ function PreviewCV({ data }) {
 						)}
 						{isSpecified(data.contact?.location) && (
 							<span className='flex items-center gap-1'>
-								<span className='text-[#F1005E] font-black select-none'>[L]</span>
+								<span className='font-black select-none brand-text-target'>[L]</span>
 								<span contentEditable={isEditing} suppressContentEditableWarning className='focus:bg-stone-100 focus:outline-none px-0.5'>
 									{data.contact.location}
 								</span>
@@ -168,7 +233,7 @@ function PreviewCV({ data }) {
 					)}
 				</header>
 
-				{/* SECCIÓN: PERFIL */}
+				{/* SUMMARY SECTION */}
 				{isSpecified(data.summary) && (
 					<section className={sectionSpacing}>
 						<h3 className='text-[11px] font-black uppercase tracking-widest border-b-2 border-stone-950 pb-1 mb-3 text-stone-950'>{t.profile}</h3>
@@ -181,7 +246,7 @@ function PreviewCV({ data }) {
 					</section>
 				)}
 
-				{/* SECCIÓN: HABILIDADES */}
+				{/* SKILLS SECTION */}
 				{data.skills && data.skills.length > 0 && (
 					<section className={sectionSpacing}>
 						<h3 className='text-[11px] font-black uppercase tracking-widest border-b-2 border-stone-950 pb-1 mb-3 text-stone-950'>{t.skills}</h3>
@@ -199,7 +264,7 @@ function PreviewCV({ data }) {
 					</section>
 				)}
 
-				{/* SECCIÓN: EXPERIENCIA */}
+				{/* EXPERIENCE SECTION */}
 				{data.experience && data.experience.length > 0 && (
 					<section className={sectionSpacing}>
 						<h3 className='text-[11px] font-black uppercase tracking-widest border-b-2 border-stone-950 pb-1 mb-3 text-stone-950'>{t.experience}</h3>
@@ -246,7 +311,7 @@ function PreviewCV({ data }) {
 					</section>
 				)}
 
-				{/* SECCIÓN: EDUCACIÓN */}
+				{/* EDUCATION SECTION */}
 				{data.education && data.education.length > 0 && (
 					<section className='mb-0 break-inside-avoid'>
 						<h3 className='text-[11px] font-black uppercase tracking-widest border-b-2 border-stone-950 pb-1 mb-3 text-stone-950'>{t.education}</h3>

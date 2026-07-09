@@ -1,8 +1,12 @@
 /* src/index.css */
 
-/* 🥇 LOS REYES DEL TOPE: Ambos @import agrupados al inicio absoluto del archivo */
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700;900&display=swap');
+/* Al inicio absoluto de src/index.css */
+@import url('https://fonts.googleapis.com/css2?family=Monoton&family=Space+Grotesk:wght@400;500;700;900&display=swap');
 @import 'tailwindcss';
+
+.font-monoton {
+	font-family: 'Monoton', cursive;
+}
 
 /* --------------------------------------------------------- */
 /* A partir de aquí ya podemos escribir CSS normal sin errores */
@@ -26,11 +30,11 @@ body {
 /* 🏁 3. BORDE CONCÉNTRICO TRIPLE: Una línea negra, una blanca y una Rosa Mexicano pegadas */
 .wyman-border-concentric {
 	box-shadow:
-		0 0 0 2px #1c1917,
-		0 0 0 5px #ffffff,
-		0 0 0 8px #f1005e,
-		0 0 0 11px #ffffff,
-		0 0 0 13px #1c1917;
+		0 0 0 3px #1c1917,
+		0 0 0 6px #ffffff,
+		0 0 0 9px #f1005e,
+		0 0 0 12px #ffffff,
+		0 0 0 15px #1c1917;
 }
 
 /* 🏁 4. TEXTO CINÉTICO: Las letras mismas se rellenan con líneas de cebra */
@@ -62,4 +66,51 @@ body {
 .animate-wyman-flow {
 	background-image: repeating-linear-gradient(0deg, #1c1917, #1c1917 2px, #ffffff 2px, #ffffff 4px);
 	animation: wymanScroll 0.25s linear infinite;
+}
+
+@keyframes wymanStrobo {
+	0% {
+		background-color: #f1005e;
+		background-image: none;
+		color: #ffffff;
+	}
+	14% {
+		/* FOTOGRAMA 1: CUADRÍCULA DIGITAL (GRID) */
+		/* Cruzamos dos gradientes lineales usando una coma */
+		background-image:
+			repeating-linear-gradient(90deg, #1c1917, #1c1917 2px, transparent 2px, transparent 12px), repeating-linear-gradient(0deg, #1c1917, #1c1917 2px, #ffffff 2px, #ffffff 12px);
+		color: #f1005e;
+	}
+	28% {
+		background-color: #ffffff;
+		background-image: none;
+	}
+	42% {
+		/* FOTOGRAMA 2: CÍRCULOS CONCÉNTRICOS (ONDA RADIAL) */
+		/* Genera anillos perfectos desde el centro */
+		background-image: repeating-radial-gradient(circle, #1c1917, #1c1917 3px, #f1005e 3px, #f1005e 8px);
+		color: #ffffff;
+	}
+	56% {
+		background-color: #1c1917;
+		background-image: none;
+	}
+	70% {
+		/* FOTOGRAMA 3: RAYOS HIPNÓTICOS (CONIC WHEEL) */
+		/* Divide el fondo en "rebanadas" angulares como un sol radiante */
+		background-image: repeating-conic-gradient(from 0deg, #f1005e, #f1005e 6deg, #ffffff 6deg, #ffffff 12deg);
+	}
+	84% {
+		background-color: #f1005e;
+		background-image: none;
+	}
+	100% {
+		background-color: #1c1917;
+		background-image: none;
+	}
+}
+
+/* 🎯 CAMBIO: Ahora la animación corre en bucle infinito mientras la clase esté activa */
+@utility animate-strobo-loop {
+	animation: wymanStrobo 0.5s steps(1) infinite;
 }
