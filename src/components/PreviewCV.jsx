@@ -336,7 +336,7 @@ function PreviewCV({ data }) {
 											contentEditable={isEditing}
 											suppressContentEditableWarning
 											className='text-[10.5px] font-mono font-bold text-stone-950 sm:text-right focus:bg-stone-100 focus:outline-none px-0.5'>
-											{edu.period}
+											Sí {edu.period}
 										</span>
 									)}
 								</div>
