@@ -17,18 +17,69 @@ function DashboardForm({ apiKey, isLoading, setIsLoading, setOptimizedCV }) {
 	const [error, setError] = useState('');
 
 	const loadExample = () => {
-		setName('Alberto Aguilera Valadéz');
-		setEmail('alberto.aguilera@gmail.com');
-		setPhone('+44 7123 456789');
-		setLinkedin('linkedin.com/in/alberto-aguilera-valadez');
+		setName('Gonzalo Lobos Ram[irez');
+		setEmail('gonzalo.lobos.ramirez@gmail.com');
+		setPhone('+56 9659 610 86');
+		setLinkedin('https://www.linkedin.com/in/gonzalo-lobos-ramírez/');
 
-		setBaseCV(
-			"Dedicated researcher with a strong background in quantitative and qualitative methods, specializing in the study of pressing social issues such as education, health inequalities, food systems, and climate change. Experienced in designing and leading research projects at The British Academy and King's College London.",
-		);
-		setJobDescription(
-			'Job Title: Research Director\nOrganization: Centre for Policy Studies (CPS)\nLocation: London, UK\nKey Responsibilities:\n- Oversee the design, methodology, and execution of high-quality public policy research.\n- Translate complex socio-economic data analysis into impactful and rigorous policy reports.',
-		);
-		setLanguage('en');
+		setBaseCV(`Gonzalo Lobos Ramírez
+Estratega Digital, Ingeniero Comercial & Especialista en IA Aplicada
+
+PERFIL PROFESIONAL
+Profesional enfocado en fusionar estrategia de negocios, tecnologías web modernas e Inteligencia Artificial aplicada. Ingeniero Comercial con Magíster en Psicología Organizacional. Sólida trayectoria liderando la estrategia de E-commerce de alta demanda para marcas globales (Nestlé Nespresso SA), orquestando +30 campañas comerciales anuales (Cyber Days, Black Friday), optimizando experiencia de usuario (UX/UI) y ratios de conversión (CRO). Fundador de Expansis Pro y creador de OSCAR, un agente comercial autónomo e infraestructura de IA basada en Gemini API, Node.js y despliegues en Hetzner/Coolify.
+
+EXPERIENCIA LABORAL
+- Expansis Pro | Estratega Digital y Fundador (2024 - Presente)
+  * Liderazgo de la dirección general orientada a la optimización operativa y conversión de negocios.
+  * Diseño de arquitecturas digitales, hojas de ruta tecnológicas e integración de agentes de IA autónomos.
+
+- Nestlé Nespresso SA | Ecommerce Merchandising Specialist (Dic 2021 - Abr 2026)
+  * Ejecución y adaptación local de la estrategia global de e-commerce en Nespresso.com.
+  * Orquestación exitosa de +30 campañas comerciales anuales de alta demanda (Cyber, Black Friday, HVC).
+  * Optimización de UX/UI en funnels de compra y estandarización del servicio omnicanal "Boutique Pickup".
+
+- Simple y Creativo | Desarrollador Front-End (Mar 2020 - Feb 2021)
+  * Desarrollo y optimización de sitios web responsivos enfocados en conversión con React y Tailwind CSS.
+
+- Todo Mejora | Gestor de Desarrollo Formativo (Mar 2021 - Dic 2021)
+  * Coordinación de capacitaciones y campañas de email marketing con Mailchimp.
+
+- Grupo Copesa | Gestión de Productos de Marketing (Jun 2015 - Dic 2015)
+  * Gestión de campañas de suscripción para La Tercera y seguimiento presupuestario de proveedores.
+
+PROYECTOS DESTACADOS & ARQUITECTURA DE IA
+- OSCAR (Agente Comercial Autónomo): Integración de Meta Cloud API (WhatsApp), Chatwoot y Cal.com API utilizando Function Calling con Gemini AI, contenerizado en VPS Hetzner con Coolify y validación SHA-256.
+
+EDUCACIÓN & FORMACIÓN
+- Magíster en Psicología Organizacional | Universidad Adolfo Ibáñez (2016 - 2017)
+- Ingeniería Comercial, Mención Administración | Universidad Adolfo Ibáñez (2011 - 2015)
+- Técnico en Fotografía Publicitaria | Instituto Profesional ARCOS (2018 - 2020)
+- Especialización Desarrollo Web Full-Stack | App Brewery London
+
+HABILIDADES & STACK TÉCNICO
+React.js, Node.js, Express, JavaScript (ES6+), Gemini AI (Function Calling), Tailwind CSS, Git/GitHub, Docker, Coolify, GA4, Google Ads, SEO/Schema Markup, Optimizely, CRO, SQL, Meta Cloud API.`);
+
+		setJobDescription(`Título del Cargo: Senior E-commerce & AI Strategy Manager / Head of Digital Product
+Empresa: Global Retail & Tech Solutions
+Ubicación: Híbrido / Remoto
+
+DESCRIPCIÓN DE LA POSICIÓN:
+Buscamos un líder digital con perfil híbrido (visión de negocios + sólida capacidad técnica) para dirigir la estrategia de e-commerce, optimizar nuestros embudos de conversión y liderar la implementación de soluciones de Inteligencia Artificial aplicadas a procesos comerciales.
+
+RESPONSABILIDADES CLAVE:
+- Liderar el roadmap de E-commerce y la ejecución de grandes campañas comerciales (Cyber Days, Black Friday).
+- Diseñar e implementar optimizaciones de UX/UI enfocadas en la tasa de conversión (CRO) mediante análisis con GA4 y pruebas A/B.
+- Diseñar e integrar agentes autónomos y automatizaciones de IA (LLMs, Gemini API, Webhooks, APIs de comunicación).
+- Supervisar la arquitectura frontend en React y la infraestructura de despliegue continuo (DevOps/VPS).
+- Actuar como conector estratégico entre la dirección comercial, marketing y los equipos de desarrollo de software.
+
+REQUISITOS DEL CANDIDATO:
+- Titulado de Ingeniería Comercial, Administración o carreras técnicas afines.
+- Experiencia demostrable de +3 años gestionando plataformas E-commerce de gran escala y estrategias digitales.
+- Conocimiento práctico en tecnologías Web (React, Node.js, Tailwind CSS) y arquitecturas de Inteligencia Artificial (Function Calling, Prompt Engineering).
+- Experiencia en SEO técnico, analítica digital (GA4, Search Console) y optimización omnicanal.
+- Nivel de Inglés profesional (B2/C1).`);
+		setLanguage('es');
 	};
 
 	const handleSubmit = async (e) => {
